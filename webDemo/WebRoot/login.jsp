@@ -23,12 +23,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  	<%=request.getParameter("msg") %>
+  	<%=request.getAttribute("msg") %>
+  	<%
+  		String status=String.valueOf(request.getAttribute("status"));
+  		Cookie[] coArray = request.getCookies();
+  		String username="";
+  		String userpwd="";
+  		if(coArray!=null){
+  			for(Cookie cookie:coArray){
+	  			if("username".equals(cookie.getName())){
+	  				username=cookie.getValue();
+	  			}else if("userpwd".equals(cookie.getName())){
+	  				userpwd=cookie.getValue();
+	  			}
+  			}
+  		}
+  		if(!status.equals("500")){
+  			String url="serverLogin.jsp?logname="+username+"&logpwd="+userpwd;
+  			request.getRequestDispatcher(url).forward(request, response);
+  		}
+  		
+  	 %>
     <form action=serverLogin.jsp method="post">
     	<label>用户名：<input name="logName" ></label><br>
     	<label>密码：<input name="logPwd" type="password"></label><br>
     	<button type="submit">登录</button>
-    	<button onclick="register.jsp">注册</button>
+    	<button onclick="javascript:location.href='register.jsp'">注册</button>
 	</form>
 	</body>
 	</html>

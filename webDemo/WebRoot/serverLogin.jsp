@@ -32,10 +32,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	if(isOk==false){
     		String msg="<script>alert('用户名或密码错误！');</script>";
     		request.setAttribute("msg",msg);
+    		request.setAttribute("status", "500");
   			request.getRequestDispatcher("login.jsp").forward(request,response);
     	}else{
     		User user=new User(logName,logPwd);
     		session.setAttribute("user", user);
+    		
+    		Integer num=Integer.valueOf(application.getAttribute("num")==null?"0":application.getAttribute("num").toString());
+    		num++;
+    		application.setAttribute("num", num++);
+    		
+    		Cookie co_logname=new Cookie("username",logName);
+    		co_logname.setMaxAge(3600);
+    		Cookie co_logpwd=new Cookie("userpwd",logPwd);
+    		co_logpwd.setMaxAge(3600);
+    		response.addCookie(co_logname);
+    		response.addCookie(co_logpwd);
     		response.sendRedirect("index.jsp");
     	}
      %>

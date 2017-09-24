@@ -22,6 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  当前页面访问人数：<%=application.getAttribute("num") %><br>
+  
    	<%
    		if(session.getAttribute("user")==null){
    			String msg="<script>alert('请先登录！');</script>";

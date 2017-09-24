@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  	<%=request.getParameter("msg") %>
+  	<%=request.getAttribute("msg") %>
     <form action="server.jsp" method="get">
     		<label>用户名:<input name="regName"></label><br>
     		<label>密码:<input name="regPwd" type="password"></label><br>
