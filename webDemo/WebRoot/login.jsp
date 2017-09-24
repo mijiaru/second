@@ -1,4 +1,3 @@
-<%@page import="com.demo1.User"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -10,7 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'login.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -19,18 +19,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-   	<%
-   		if(session.getAttribute("user")==null){
-   			String msg="<script>alert('请先登录！');</script>";
-    		request.setAttribute("msg",msg);
-  			request.getRequestDispatcher("login.jsp").forward(request,response);
-   		}else{
-   			String userName=((User)session.getAttribute("user")).getUserName();
-   			out.print("欢迎您~~~"+userName);
-   		}
-   	 %>
-  </body>
-</html>
+  	<%=request.getParameter("msg") %>
+    <form action=serverLogin.jsp method="post">
+    	<label>用户名：<input name="logName" ></label><br>
+    	<label>密码：<input name="logPwd" type="password"></label><br>
+    	<button type="submit">登录</button>
+    	<button onclick="register.jsp">注册</button>
+	</form>
+	</body>
+	</html>

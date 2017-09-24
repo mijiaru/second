@@ -1,4 +1,3 @@
-<%@page import="com.demo1.User"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -10,7 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'TestSession.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -19,18 +19,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-   	<%
-   		if(session.getAttribute("user")==null){
-   			String msg="<script>alert('请先登录！');</script>";
-    		request.setAttribute("msg",msg);
-  			request.getRequestDispatcher("login.jsp").forward(request,response);
-   		}else{
-   			String userName=((User)session.getAttribute("user")).getUserName();
-   			out.print("欢迎您~~~"+userName);
-   		}
-   	 %>
+    sessionid:<%=session.getId() %>
+    <button onclick="javascript:location.href='session.jsp?type=1'">session清除</button>
+    <button onclick="javascript:location.href='session.jsp?type=2'">session过期</button>
   </body>
 </html>

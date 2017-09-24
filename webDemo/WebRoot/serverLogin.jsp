@@ -1,4 +1,5 @@
 <%@page import="com.demo1.User"%>
+<%@page import="com.demo1.UserInfo"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -10,7 +11,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'serverLogin.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -19,18 +21,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-   	<%
-   		if(session.getAttribute("user")==null){
-   			String msg="<script>alert('请先登录！');</script>";
+    <%
+    	String logName=request.getParameter("logName");
+    	String logPwd=request.getParameter("logPwd");
+    	boolean isOk=UserInfo.findUser(logName, logPwd);
+    	if(isOk==false){
+    		String msg="<script>alert('用户名或密码错误！');</script>";
     		request.setAttribute("msg",msg);
   			request.getRequestDispatcher("login.jsp").forward(request,response);
-   		}else{
-   			String userName=((User)session.getAttribute("user")).getUserName();
-   			out.print("欢迎您~~~"+userName);
-   		}
-   	 %>
+    	}else{
+    		User user=new User(logName,logPwd);
+    		session.setAttribute("user", user);
+    		response.sendRedirect("index.jsp");
+    	}
+     %>
   </body>
 </html>
